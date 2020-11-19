@@ -1,0 +1,39 @@
+<html>
+<body>
+Hello There
+<br><br>
+
+<input type="text" id="cmd"></input><button onclick="hax(document.getElementById('cmd').value)">OMG</button>
+<br><br>
+<div id="msg">Stuff will go here.<br></div>
+
+<script>
+//const WebSocket = require('ws');
+
+function hax(cmd)
+{
+  let socket = new WebSocket("ws://127.0.0.1:5678");
+
+  document.getElementById("msg").innerHTML=''
+
+  socket.onopen = function(e) {    
+    console.log("sending data...");
+    socket.send(cmd);
+    console.log("done.");
+  };
+
+  socket.onmessage = function(event) {
+     // console.log(event.data.toString());
+    document.getElementById("msg").innerHTML += (event.data.toString()+'<br>')
+  };
+
+  socket.onerror = function(event) {
+    console.log(event);
+
+}
+
+};
+</script>
+
+</body>
+</html>
